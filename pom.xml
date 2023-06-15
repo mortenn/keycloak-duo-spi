@@ -13,8 +13,16 @@
     <packaging>jar</packaging>
 
     <properties>
-        <keycloak.version>3.4.3.Final</keycloak.version>
+        <keycloak.version>21.1.1</keycloak.version>
     </properties>
+
+  <repositories>
+    <repository>
+      <id>gluu</id>
+      <name>Gluu</name>
+      <url>	https://ox.gluu.org/maven/</url>
+    </repository>
+  </repositories>
 
     <dependencies>
         <dependency>

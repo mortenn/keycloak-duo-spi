@@ -18,7 +18,6 @@ package com.mulesoft.keycloak.auth.spi.duo;
 
 import org.keycloak.authentication.AuthenticationFlowContext;
 import org.keycloak.authentication.AuthenticationFlowError;
-import org.keycloak.authentication.AuthenticationFlowException;
 import org.keycloak.authentication.Authenticator;
 import org.keycloak.forms.login.LoginFormsProvider;
 import org.keycloak.models.AuthenticatorConfigModel;
@@ -30,12 +29,6 @@ import com.duosecurity.duoweb.DuoWeb;
 
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
-
-import java.nio.ByteBuffer;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
-import java.util.Random;
 
 import static com.mulesoft.keycloak.auth.spi.duo.DuoMfaAuthenticatorFactory.*;
 

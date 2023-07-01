@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.mulesoft</groupId>
@@ -9,20 +9,20 @@
     <version>1.1</version>
 
     <name>Duo Mfa Keycloak</name>
-    <description/>
+    <description />
     <packaging>jar</packaging>
 
     <properties>
-        <keycloak.version>21.1.1</keycloak.version>
+        <keycloak.version>21.1.2</keycloak.version>
     </properties>
 
-  <repositories>
-    <repository>
-      <id>gluu</id>
-      <name>Gluu</name>
-      <url>	https://ox.gluu.org/maven/</url>
-    </repository>
-  </repositories>
+    <repositories>
+        <repository>
+            <id>gluu</id>
+            <name>Gluu</name>
+            <url>	https://ox.gluu.org/maven/</url>
+        </repository>
+    </repositories>
 
     <dependencies>
         <dependency>

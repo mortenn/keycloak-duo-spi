@@ -1,22 +1,16 @@
 package com.mulesoft.keycloak.auth.spi.duo;
 
-import org.jboss.resteasy.mock.MockHttpRequest;
-import org.jboss.resteasy.plugins.server.BaseHttpRequest;
-import org.jboss.resteasy.spi.HttpRequest;
 import org.junit.Test;
 import org.keycloak.authentication.AuthenticationFlowContext;
 import org.keycloak.forms.login.LoginFormsProvider;
 import org.keycloak.models.AuthenticatorConfigModel;
 import org.keycloak.models.UserModel;
 
-import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
 import static com.mulesoft.keycloak.auth.spi.duo.DuoMfaAuthenticatorFactory.*;
 import static org.mockito.Mockito.*;
-
-import static org.junit.Assert.*;
 
 public class DuoMfaAuthenticatorTest {
     @Test

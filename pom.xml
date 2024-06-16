@@ -13,8 +13,8 @@
     <packaging>jar</packaging>
 
     <properties>
-        <keycloak.version>24.0.4</keycloak.version>
-        <maven.compiler.release>17</maven.compiler.release>
+        <keycloak.version>25.0.0</keycloak.version>
+        <maven.compiler.release>21</maven.compiler.release>
     </properties>
 
     <repositories>

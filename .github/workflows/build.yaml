@@ -45,7 +45,8 @@ jobs:
         run: docker push ${{ env.IMAGE_NAME }}:${{ env.KEYCLOAK_VERSION }}
 
       - name: Upload JAR artifact for download/use
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: keycloak-duo-spi-jar
-          path: target/${{ env.JAR_NAME }}
+          path: |
+            target/${{ env.JAR_NAME }}

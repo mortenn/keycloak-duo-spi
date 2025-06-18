@@ -8,7 +8,7 @@ on:
 
 env:
   IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/keycloak-duo-spi-init
-  JAR_NAME: keycloak-duo-spi-1.1-jar-with-dependencies.jar
+  JAR_NAME: keycloak-duo-spi-jar-with-dependencies.jar
   KEYCLOAK_VERSION: 26.2.5
 
 jobs:

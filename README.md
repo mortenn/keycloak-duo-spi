@@ -4,21 +4,83 @@ Keycloak integration for Duo Security MFA. Provides an authentication execution 
 
 ## Build
 
-You may need to modify the keycloak versions in the pom.xml to correspond to yours. I'm using 3.4.3.Final.
+You may need to modify the Keycloak version in the pom.xml to correspond to your environment. This project uses Keycloak version 26.2.5.
 
 ```
-$ mvn clean test install
+$ mvn clean package
 ```
 
-## Install
+## Deploying with Kubernetes and Helm (Recommended)
 
-(assumes keycloak is installed to `/opt/keycloak`)
+To install this SPI in your Keycloak running in Kubernetes (for example via Helm or Argo CD), use an init container that injects the SPI JAR at startup:
+
+1. If needed, build and push the init container image, which bundles the SPI JAR (see GitHub Actions workflow).
+2. Add this init container to your Keycloak values file (or deployment manifest):
+3. Ensure your Keycloak container mounts the same volume at /opt/keycloak/providers.
+
+```yaml
+initContainers:
+  - name: init-copy-spi-jar
+    image: ghcr.io/YOUR_GITHUB_USERNAME/keycloak-duo-spi-init:26.2.5
+    volumeMounts:
+      - name: providers
+        mountPath: /opt/providers
+
+volumes:
+  - name: providers
+    emptyDir: {}
 ```
-$ cp target/keycloak-duo-spi-jar-with-dependencies.jar /opt/keycloak/standalone/deployments/
-$ cp src/main/duo-mfa.ftl /opt/keycloak/themes/base/login/duo-mfa.ftl
-# restart keycloak
+
+## Deploying the duo-mfa.ftl template
+
+### Create a ConfigMap
+If deploying manually:
+
+```bash
+kubectl create configmap keycloak-duo-theme \
+  --from-file=duo-mfa.ftl=src/main/resources/duo-mfa.ftl \
+  -n keycloak
 ```
-## Configure
+
+If using Argo CD or GitOps, define it as YAML:
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+name: keycloak-duo-theme
+namespace: keycloak
+data:
+duo-mfa.ftl: |
+  <#-- Your FreeMarker template content here -->
+  <iframe src="${duo_iframe_url}" width="100%" height="500" frameborder="0"></iframe>
+```
+you can find the template under src/main/resources/duo-mfa.ftl
+
+### Mount template into Keycloak
+Modify your Keycloak Deployment (or Helm values.yaml via extraVolumes / extraVolumeMounts) like so:
+```yaml
+# Add to volumes section
+volumes:
+  - name: duo-theme
+    configMap:
+      name: keycloak-duo-theme
+
+# Add to container.volumeMounts
+volumeMounts:
+  - name: duo-theme
+    mountPath: /opt/keycloak/themes/base/login/duo-mfa.ftl
+    subPath: duo-mfa.ftl
+```
+
+## Manual Server Installation (Legacy / Non-Kubernetes)
+
+If you run Keycloak standalone, copy the SPI jar and theme manually:
+```bash
+cp target/keycloak-duo-spi-jar-with-dependencies.jar /opt/keycloak/standalone/deployments/
+cp src/main/duo-mfa.ftl /opt/keycloak/themes/base/login/duo-mfa.ftl
+# Restart Keycloak
+```
+## Configure (outdated)
 
 You need to add Duo as a trusted frame-able source to the Keycloak Content Security Policy.
 Content-Security-Policy: `frame-src https://*.duosecurity.com/ 'self'; ...`
